@@ -3,30 +3,52 @@ import React from 'react';
 import './Components/style.css';
 import Navbar from './Components/Navbar'
 //import QuoteCard from './Components/QuoteCard'
-import QuoteList from './Components/QuoteList'
+import QuoteCard from './Components/QuoteCard'
+import axios from 'axios'
 
+const newCharacter = {
+  quote:
+      "Facts are meaningless. You could use facts to prove anything that's even remotely true.",
+    character: "Homer Simpson",
+    image:
+      "https://cdn.glitch.com/3c3ffadc-3406-4440-bb95-d40ec8fcde72%2FHomerSimpson.png?1497567511939"
+  
+}
 
-function App() {
-  return (
+class App extends React.Component {
+  constructor (props){
+    super(props)
+    this.state = {
+      character : newCharacter
+    }
+    this.getCharacter = this.getCharacter.bind(this)
+  }
+  
+getCharacter(){
+// Send the request
+axios.get('https://simpsons-quotes-api.herokuapp.com/quotes')
+// Extract the DATA from the received response
+.then(response => response.data)
+// Use this data to update the state
+.then(data => {
+  this.setState({
+    character: data[0],
+  });
+  console.log(data[0])
+});
+}
+
+  render () {return (
     <div><div className="Navbar">
       <Navbar/>
     </div>
+    {/* <button type="button" onClick={this.getEmployee}>Get employee</button> */}
+    <button type="button" onClick={this.getCharacter}>Get a new quote</button>
     <div>
-      <QuoteList /></div>
-    {/* <div>
-      <QuoteCard characterFirstName="Homer" characterLastName="Simpson" quote="I believe the children are the future... Unless we stop them now!" image = "https://cdn.glitch.com/3c3ffadc-3406-4440-bb95-d40ec8fcde72%2FHomerSimpson.png?1497567511939"/>
+      <QuoteCard character={this.state.character} /></div>
+
     </div>
-    <div>
-      <QuoteCard characterFirstName="Homer" characterLastName="Simpson" quote="Ahh! Sweet liquor eases the pain." image = "https://cdn.glitch.com/3c3ffadc-3406-4440-bb95-d40ec8fcde72%2FTroyMcClure.png?1497567511112"/>
-    </div>
-    <div>
-      <QuoteCard characterFirstName="Homer" characterLastName="Simpson" quote="I'm sleeping in the bath tub." image = "https://cdn.glitch.com/3c3ffadc-3406-4440-bb95-d40ec8fcde72%2FMargeSimpson.png?1497567512205"/>
-    </div>
-    <div>
-      <QuoteCard characterFirstName="Homer" characterLastName="Simpson" quote="Vivement ce soir qu'on se couche"/>
-    </div> */}
-    </div>
-  );
+  );}
 }
 
 export default App;

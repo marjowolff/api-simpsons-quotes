@@ -1,17 +1,23 @@
 import React from 'react'
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 
-const QuoteCard = (props) => 
-<figure className="QuoteCard">
+function QuoteCard ({character}) {
+  
+    return (<figure className="QuoteCard" key={character.quote}>
     <img
-      src={props.image}
-      alt={props.character}/>
+      src={character.image}
+      alt={character.character}/>
     <figcaption>
       <blockquote>
-        {props.quote}</blockquote>
-      <cite>{props.character}</cite>
+        {character.quote}</blockquote>
+      <p>
+        <cite>{character.character}</cite>
+      </p>
     </figcaption>
-  </figure>
+  </figure>)
+  
+} 
+
 
 // QuoteCard.propTypes = {
 //   characterFirstName: PropTypes.string.isRequired,
